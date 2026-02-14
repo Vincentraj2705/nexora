@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Contact - NEXORA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="kings-logo.png" alt="Kings Engineering College" class="logo-img" style="height: 60px;">
+                <img src="novanexus-logo.png" alt="Nova Nexus Hub" class="logo-img" style="height: 60px;">
+                <img src="NEXORA-logo.png" alt="NEXORA Logo" class="logo-img" style="height: 60px;">
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="team.html">Regards</a></li>
+                <li><a href="register.html" class="nav-register-highlight menu-register">Register</a></li>
+                <li><a href="contact.html" class="active">Contact Us</a></li>
+            </ul>
+            <a href="register.html" class="mobile-register-btn" id="mobileRegister">Register</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="page-section">
+        <div class="container">
+            <h1 class="page-title">Contact Us</h1>
+            <p class="page-subtitle">Have questions? We're here to help!</p>
+            
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Visit Us</h3>
+                        <p>Nova Nexus Hub</p>
+                        <p>Department of ECE</p>
+                        <p>Kings Engineering College</p>
+                        <p>Chennai-Bangalore Highway</p>
+                        <p>Irungattukottai, Sriperumbudur 602117</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Support Hours</h3>
+                        <p>Monday - Saturday</p>
+                        <p>8:45 AM - 2:15 PM</p>
+                        <p><small>(During registration period)</small></p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <form id="contactForm" class="contact-form">
+                        <h2>Send us a Message</h2>
+                        
+                        <!-- Honeypot field (hidden from users, catches bots) -->
+                        <input type="text" id="website" name="website" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" autocomplete="off">
+                        
+                        <div class="form-group">
+                            <label for="contactName">Your Name *</label>
+                            <input type="text" id="contactName" name="contactName" required maxlength="50" minlength="2" pattern="[a-zA-Z\s.]+" title="Name should contain only letters, spaces, and dots">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Your Email *</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email address">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactPhone">Phone Number (WhatsApp) *</label>
+                            <input type="tel" id="contactPhone" name="contactPhone" required pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" title="Enter a valid 10-digit Indian mobile number">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject">Subject *</label>
+                            <select id="contactSubject" name="contactSubject" required>
+                                <option value="">Select a subject</option>
+                                <option value="registration">Registration Query</option>
+                                <option value="technical">Technical Question</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea id="contactMessage" name="contactMessage" rows="6" required maxlength="1000" minlength="10" placeholder="Please describe your query (minimum 10 characters)..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I participate individually?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Teams can have 1–2 members only.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>When is the registration deadline?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Registration closes on March 10, 2026. Make sure to register before this date!</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do I need to bring my own laptop?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, participants must bring their own laptops and necessary equipment for development.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Will I receive a certificate?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, all participants will receive certificates of participation. Winners will receive special certificates of achievement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media (Optional - if you have) -->
+            <div class="social-section">
+                <h2>Follow Us</h2>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/novanexus_ece/" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section footer-order-2">
+                    <h3>NEXORA</h3>
+                    <p>Organized by Nova Nexus Hub<br>Department of ECE<br>Kings Engineering College</p>
+                </div>
+                <div class="footer-section footer-order-1">
+                    <div class="sponsor-section" style="text-align: center;">
+                        <h3>Sponsored By</h3>
+                        <div class="sponsor-logos" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 15px;">
+                            <a href="https://www.instagram.com/book_my_tee?igsh=MWpzNTFtZmJ6ZTJzZQ==" target="_blank" rel="noopener noreferrer">
+                                <img src="sponsor-logo.png" alt="BMT Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <img src="giftogift-logo.png" alt="Giftogift Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section footer-order-3">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section footer-order-4">
+                    <h3>Location</h3>
+                    <div class="map-container" style="margin-top: 10px;">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.5866934737337!2d79.98564857482!3d12.995281014359108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a528cc0c96b8fff%3A0x77248c47f364dcf5!2sKings%20Engineering%20College!5e1!3m2!1sen!2sin!4v1770993492330!5m2!1sen!2sin" 
+                            width="250" 
+                            height="150" 
+                            style="border:0; border-radius: 8px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nova Nexus Hub, Kings Engineering College. All rights reserved.</p>
+                <p class="developer-credit">Designed & Developed by <a href="https://www.linkedin.com/in/vincentrajr/" target="_blank" rel="noopener noreferrer" style="color: var(--neon-blue); font-weight: 600;">Vincent Raj R</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="contact-form.js"></script>
+</body>
+<script src="script.js"></script>
+</html>
+
+

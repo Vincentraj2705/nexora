@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Register - NEXORA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="kings-logo.png" alt="Kings Engineering College" class="logo-img" style="height: 60px;">
+                <img src="novanexus-logo.png" alt="Nova Nexus Hub" class="logo-img" style="height: 60px;">
+                <img src="NEXORA-logo.png" alt="NEXORA Logo" class="logo-img" style="height: 60px;">
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="team.html">Regards</a></li>
+                <li><a href="register.html" class="active nav-register-highlight menu-register">Register</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <a href="register.html" class="mobile-register-btn" id="mobileRegister">Register</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="page-section">
+        <div class="container">
+            <h1 class="page-title">Register for NEXORA 2K26</h1>
+            <p class="page-subtitle">Join us for an exciting innovation event!</p>
+            <form class="registration-form" id="registrationForm">
+                <h2>Team Registration Form</h2>
+                
+                <!-- Team Details Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-users"></i> Team Details</h3>
+                    <div class="form-group">
+                        <label for="teamName">Team Name *</label>
+                        <input type="text" id="teamName" name="teamName" required maxlength="50" minlength="2" pattern="[a-zA-Z0-9\s&.-]+" title="Team name should contain only letters, numbers, spaces, and basic symbols">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventName">Name of the Event *</label>
+                        <select id="eventName" name="eventName" required>
+                            <option value="">Select event</option>
+                            <option value="Paper Presentation">Paper Presentation</option>
+                            <option value="Project Expo">Project Expo</option>
+                            <option value="Line Follower">Line Follower</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="teamSize">Team Size *</label>
+                        <select id="teamSize" name="teamSize" required>
+                            <option value="">Select team size</option>
+                            <option value="1">1 Member (Solo)</option>
+                            <option value="2">2 Members (Duo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Solo Member Details (shown when team size = 1) -->
+                <div class="form-section" id="soloSection" style="display: none;">
+                    <h3><i class="fas fa-user"></i> Participant Details</h3>
+                    <div class="form-group">
+                        <label for="soloName">Name *</label>
+                        <input type="text" id="soloName" name="soloName" maxlength="50" minlength="2" pattern="[a-zA-Z\s.]+" title="Name should contain only letters, spaces, and dots">
+                    </div>
+                    <div class="form-group">
+                        <label for="soloCollege">College Name *</label>
+                        <input type="text" id="soloCollege" name="soloCollege" placeholder="Enter your college name" maxlength="100" minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="soloDepartment">Department *</label>
+                        <input type="text" id="soloDepartment" name="soloDepartment" placeholder="e.g., Computer Science" maxlength="50" minlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label for="soloYear">Year of Study *</label>
+                        <select id="soloYear" name="soloYear">
+                            <option value="">Select year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="soloPhone">Phone Number (WhatsApp) *</label>
+                        <input type="tel" id="soloPhone" name="soloPhone" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" title="Enter a valid 10-digit Indian mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="soloEmail">Email *</label>
+                        <input type="email" id="soloEmail" name="soloEmail" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email address">
+                    </div>
+                </div>
+
+                <!-- Duo Team Details (shown when team size = 2) -->
+                <div class="form-section" id="duoSection" style="display: none;">
+                    <h3><i class="fas fa-user-tie"></i> Team Leader Details</h3>
+                    <div class="form-group">
+                        <label for="leaderName">Team Leader Name *</label>
+                        <input type="text" id="leaderName" name="leaderName" maxlength="50" minlength="2" pattern="[a-zA-Z\s.]+" title="Name should contain only letters, spaces, and dots">
+                    </div>
+                    <div class="form-group">
+                        <label for="mateName">Team Mate Name *</label>
+                        <input type="text" id="mateName" name="mateName" maxlength="50" minlength="2" pattern="[a-zA-Z\s.]+" title="Name should contain only letters, spaces, and dots">
+                    </div>
+                    <div class="form-group">
+                        <label for="duoCollege">College Name *</label>
+                        <input type="text" id="duoCollege" name="duoCollege" placeholder="Enter your college name" maxlength="100" minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="duoDepartment">Department *</label>
+                        <input type="text" id="duoDepartment" name="duoDepartment" placeholder="e.g., Electronics & Communication" maxlength="50" minlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label for="duoYear">Year of Study *</label>
+                        <select id="duoYear" name="duoYear">
+                            <option value="">Select year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="duoPhone">Phone Number (WhatsApp) *</label>
+                        <input type="tel" id="duoPhone" name="duoPhone" placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" title="Enter a valid 10-digit Indian mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="duoEmail">Email *</label>
+                        <input type="email" id="duoEmail" name="duoEmail" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Enter a valid email address">
+                    </div>
+                </div>
+
+                <!-- Consent and Submit -->
+                <div class="form-section">
+                    <!-- Honeypot field (hidden from users, catches bots) -->
+                    <input type="text" id="website" name="website" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" autocomplete="off">
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="consentRules" name="consentRules" required>
+                        <label for="consentRules">I read the Rules and Guidelines and shall agree to it *</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="consentUpdates" name="consentUpdates" required>
+                        <label for="consentUpdates">I consent to receive event updates via Email and WhatsApp *</label>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Registration
+                    </button>
+                </div>
+                <p class="form-note">* All fields are mandatory</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Payment Information Card -->
+    <section class="payment-info-card" id="paymentInfoCard" style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.1)); border: 2px solid var(--nexora-orange); border-radius: 20px; margin: 2rem 0; padding: 2rem; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;" onclick="openPaymentInfoModal()">
+        <div class="container">
+            <div style="position: absolute; top: -50px; right: -50px; font-size: 6rem; color: rgba(255, 152, 0, 0.1); transform: rotate(15deg);">
+                <i class="fas fa-credit-card"></i>
+            </div>
+            
+            <div style="position: relative; z-index: 2;">
+                <h3 style="color: var(--nexora-gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle"></i>
+                    Payment Information & QR Code
+                    <i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: auto;"></i>
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Registration Fee</p>
+                        <p style="color: var(--nexora-gold); font-size: 1.5rem; font-weight: bold; margin: 0;">₹120</p>
+                    </div>
+                    <div>
+                        <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">UPI ID</p>
+                        <p style="color: #e2e8f0; font-family: monospace; margin: 0; font-size: 0.9rem;">indirasuthanvece@oksbi</p>
+                    </div>
+                    <div>
+                        <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Payee Name</p>
+                        <p style="color: #e2e8f0; margin: 0; font-size: 0.9rem;">Indirasuthan Vijaya</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; border-radius: 10px; padding: 1rem; text-align: center;">
+                    <p style="color: #3b82f6; margin: 0; font-weight: bold;">
+                        <i class="fas fa-qrcode"></i> Click to view QR Code & complete payment details
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Info Modal -->
+    <div id="paymentInfoModal" class="payment-modal" style="display: none;">
+        <div class="payment-modal-content" style="background: linear-gradient(135deg, #1a1c29, #2d1b2e); border: 2px solid var(--nexora-orange); border-radius: 20px; padding: 2rem; max-width: 90vw; max-height: 90vh; overflow-y: auto; position: relative; color: white; box-shadow: 0 20px 60px rgba(255, 152, 0, 0.3);">
+            <button class="close-btn" onclick="closePaymentInfoModal()" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; transition: color 0.3s ease;">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--nexora-gold); margin-bottom: 1rem;">
+                    <i class="fas fa-credit-card"></i> NEXORA 2K26 Payment Details
+                </h2>
+                <div style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(220, 38, 38, 0.2)); border: 2px solid var(--nexora-orange); border-radius: 15px; padding: 1.5rem; text-align: center; margin: 2rem 0;">
+                    <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 0.5rem;">Registration Fee</p>
+                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--nexora-gold); margin: 0;">₹120</h1>
+                </div>
+            </div>
+
+            <!-- QR Code Section -->
+            <div style="text-align: center; margin: 2rem 0; background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 15px; padding: 1.5rem;">
+                <h4 style="color: #3b82f6; margin-bottom: 1rem;">
+                    <i class="fas fa-qrcode"></i> Scan QR Code to Pay
+                </h4>
+                <div style="background: white; padding: 1rem; border-radius: 15px; display: inline-block; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                    <img src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 200px; height: 200px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display: none; color: #dc2626; font-weight: bold; padding: 2rem; text-align: center;">QR Image not found</div>
+                </div>
+                <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    <p style="color: #22c55e; margin: 0; font-weight: bold;">
+                        <i class="fas fa-mobile-alt"></i> Open any UPI app → Scan QR → Add Team ID in payment note → Pay ₹120
+                    </p>
+                </div>
+            </div>
+
+            <!-- Payment Details Grid -->
+            <div style="margin-bottom: 1rem;">
+                <h4 style="color: var(--nexora-gold);">
+                    <i class="fas fa-info-circle"></i> Payment Details (Click to copy)
+                </h4>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
+                    <label style="font-weight: bold; color: var(--nexora-gold); display: block; margin-bottom: 0.5rem;">UPI ID:</label>
+                    <div onclick="selectText(this)" style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px; user-select: all; cursor: text; transition: all 0.3s ease;">indirasuthanvece@oksbi</div>
+                </div>
+                
+                <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
+                    <label style="font-weight: bold; color: var(--nexora-gold); display: block; margin-bottom: 0.5rem;">UPI Number:</label>
+                    <div onclick="selectText(this)" style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px; user-select: all; cursor: text; transition: all 0.3s ease;">9042859133</div>
+                </div>
+                
+                <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
+                    <label style="font-weight: bold; color: var(--nexora-gold); display: block; margin-bottom: 0.5rem;">Amount:</label>
+                    <div style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px;">₹120</div>
+                </div>
+
+                <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
+                    <label style="font-weight: bold; color: var(--nexora-gold); display: block; margin-bottom: 0.5rem;">Payee Name:</label>
+                    <div style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px;">Indirasuthan Vijaya</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px; padding: 1rem; margin-top: 2rem;">
+                <p style="color: #22c55e; margin: 0; text-align: center;">
+                    <i class="fas fa-check-circle"></i>
+                    After registration, you'll get Team ID. Remember to add it in payment note for verification.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Popup -->
+    <div id="processingModal" class="payment-modal" style="display: none;">
+        <div class="payment-modal-content" style="text-align: center; max-width: 400px; min-height: auto;">
+            <div style="padding: 2rem 1rem;">
+                <div style="font-size: 3rem; color: var(--nexora-orange); margin-bottom: 1rem; animation: pulse 2s infinite;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <h3 style="color: var(--nexora-gold); margin-bottom: 1rem;">Processing your submission</h3>
+                <p style="color: #94a3b8; margin: 0;">Wait for the payment popup to appear, Dont close the page nor refresh</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Payment Modal -->
+    <div id="paymentModal" class="payment-modal" style="display: none;">
+        <div class="payment-modal-content">
+            <button class="close-btn" onclick="closePaymentModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="payment-header">
+                <i class="fas fa-check-circle success-icon" style="color: #22c55e; font-size: 3rem;"></i>
+                <h2>Registration Successful!</h2>
+                <div class="team-id-display" style="background: #f0f9ff; border: 2px solid #0ea5e9; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;">
+                    <p style="font-size: 1.1em; color: #0369a1; margin: 0 0 5px 0;"><strong>Your Team ID: <span id="teamIdDisplay">-</span></strong></p>
+                    <p style="font-size: 0.9em; color: #64748b; margin: 0;">Keep this ID safe for payment reference</p>
+                </div>
+            </div>
+
+            <div class="payment-amount-main" style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(220, 38, 38, 0.2)); border: 2px solid var(--nexora-orange); border-radius: 15px; padding: 1.5rem; text-align: center; margin: 2rem 0;">
+                <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 0.5rem;">Pay <span style="color: var(--nexora-gold); font-weight: bold;">₹120</span> to confirm your registration</p>
+            </div>
+
+            <!-- Pay Now Button (Mobile Only) -->
+            <button class="pay-now-btn" onclick="openUPIApp()" style="background: linear-gradient(45deg, var(--nexora-orange), var(--nexora-gold)); color: #000; border: none; padding: 1rem 2rem; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; width: 100%; margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <i class="fas fa-mobile-alt"></i>
+                Click Here To Pay Now via UPI (Team ID Auto-Added)
+            </button>
+
+            <!-- QR Code Section -->
+            <div class="qr-section" id="qrSection" style="text-align: center; margin: 2rem 0; background: rgba(255, 152, 0, 0.1); border: 2px dashed var(--nexora-orange); border-radius: 15px; padding: 2rem; display: none;">
+                <h3 style="color: var(--nexora-gold);">
+                    <i class="fas fa-qrcode"></i> Scan the QR to pay
+                </h3>
+                <div style="background: white; padding: 1rem; border-radius: 15px; display: inline-block; margin: 1rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                    <img src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 200px; height: 200px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display: none; color: #dc2626; font-weight: bold; padding: 2rem;">QR Image not found</div>
+                </div>
+            </div>
+
+            <!-- Mobile QR Section -->
+            <div class="mobile-qr-section" id="mobileQrSection" style="text-align: center; margin: 2rem 0; background: rgba(255, 152, 0, 0.1); border: 2px dashed var(--nexora-orange); border-radius: 15px; padding: 1.5rem; display: none;">
+                <h4 style="color: var(--nexora-gold); margin-bottom: 1rem;">
+                    <i class="fas fa-qrcode"></i> Scan the QR to pay
+                </h4>
+                <div style="background: white; padding: 1rem; border-radius: 15px; display: inline-block; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                    <img src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 150px; height: 150px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display: none; color: #dc2626; font-weight: bold; padding: 2rem; text-align: center;">QR Image not found</div>
+                </div>
+            </div>
+
+            <!-- Payment Confirmation -->
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px; padding: 1rem; margin: 2rem 0;">
+                <p style="color: #22c55e; margin: 0; text-align: center;">
+                    <i class="fas fa-check-circle"></i>
+                    Payment confirmation email will be sent within 24 hours
+                </p>
+            </div>
+
+            <!-- Payment Details Button -->
+            <div style="text-align: center; margin: 1rem 0;">
+                <button onclick="closePaymentModal(); document.getElementById('paymentInfoCard').scrollIntoView({ behavior: 'smooth', block: 'center' });" style="background: rgba(59, 130, 246, 0.2); border: 2px solid #3b82f6; color: #3b82f6; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-info-circle"></i> Payment Details
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section footer-order-2">
+                    <h3>NEXORA 2K26</h3>
+                    <p>Organized by Nova Nexus Hub<br>Department of ECE<br>Kings Engineering College</p>
+                </div>
+                <div class="footer-section footer-order-1">
+                    <div class="sponsor-section" style="text-align: center;">
+                        <h3>Sponsored By</h3>
+                        <div class="sponsor-logos" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 15px;">
+                            <a href="https://www.instagram.com/book_my_tee?igsh=MWpzNTFtZmJ6ZTJzZQ==" target="_blank" rel="noopener noreferrer">
+                                <img src="sponsor-logo.png" alt="BMT Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <img src="giftogift-logo.png" alt="Giftogift Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section footer-order-3">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section footer-order-4">
+                    <h3>Location</h3>
+                    <div class="map-container" style="margin-top: 10px;">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.5866934737337!2d79.98564857482!3d12.995281014359108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a528cc0c96b8fff%3A0x77248c47f364dcf5!2sKings%20Engineering%20College!5e1!3m2!1sen!2sin!4v1770993492330!5m2!1sen!2sin" 
+                            width="250" 
+                            height="150" 
+                            style="border:0; border-radius: 8px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nova Nexus Hub, Kings Engineering College. All rights reserved.</p>
+                <p class="developer-credit">Designed & Developed by <a href="https://www.linkedin.com/in/vincentrajr/" target="_blank" rel="noopener noreferrer" style="color: var(--neon-blue); font-weight: 600;">Vincent Raj R</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="registration-form.js"></script>
+    
+    <script>
+        // Enhanced payment modal with device detection
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Registration page loaded with static QR code payment system');
+            
+            // Add responsive styles for payment modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .payment-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                    backdrop-filter: blur(5px);
+                }
+                .payment-modal-content {
+                    background: linear-gradient(135deg, #1a1c29, #2d1b2e);
+                    border: 2px solid var(--nexora-orange);
+                    border-radius: 20px;
+                    padding: 2rem;
+                    max-width: 90vw;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    color: white;
+                    box-shadow: 0 20px 60px rgba(255, 152, 0, 0.3);
+                }
+                @media (min-width: 768px) {
+                    .payment-modal-content {
+                        max-width: 800px;
+                        padding: 2.5rem;
+                    }
+                }
+                .close-btn {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    background: transparent;
+                    border: none;
+                    font-size: 1.5rem;
+                    color: #94a3b8;
+                    cursor: pointer;
+                    transition: color 0.3s ease;
+                }
+                .close-btn:hover {
+                    color: var(--nexora-orange);
+                }
+                @media (max-width: 767px) {
+                    .pay-now-btn { display: flex !important; }
+                    .mobile-qr-section { display: block !important; }
+                }
+                @media (min-width: 768px) {
+                    .pay-now-btn { display: none !important; }
+                    .mobile-qr-section { display: none !important; }
+                }
+                .upi-details-bottom div[onclick]:hover {
+                    background: rgba(0, 0, 0, 0.5) !important;
+                    border: 1px solid var(--nexora-orange) !important;
+                }
+                /* Processing popup animation */
+                @keyframes pulse {
+                    0%, 100% { opacity: 0.7; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.05); }
+                }
+                /* Payment Details button hover */
+                button[onclick*="paymentInfoCard"]:hover {
+                    background: rgba(59, 130, 246, 0.3) !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Helper function to select text when clicked
+        function selectText(element) {
+            if (document.selection) {
+                const range = document.body.createTextRange();
+                range.moveToElementText(element);
+                range.select();
+            } else if (window.getSelection) {
+                const range = document.createRange();
+                range.selectNode(element);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                
+                // Copy to clipboard
+                try {
+                    document.execCommand('copy');
+                    element.style.background = 'rgba(34, 197, 94, 0.3)';
+                    setTimeout(() => {
+                        element.style.background = 'rgba(0, 0, 0, 0.3)';
+                    }, 1000);
+                } catch (err) {
+                    console.log('Copy failed');
+                }
+            }
+        }
+
+        // Copy team ID function
+        function copyTeamId() {
+            const teamIdElement = document.getElementById('paymentTeamId');
+            const teamId = teamIdElement.textContent;
+            
+            if (teamId && teamId !== '-') {
+                navigator.clipboard.writeText(teamId).then(() => {
+                    teamIdElement.style.background = 'rgba(34, 197, 94, 0.3)';
+                    teamIdElement.style.borderColor = '#22c55e';
+                    setTimeout(() => {
+                        teamIdElement.style.background = 'rgba(59, 130, 246, 0.2)';
+                        teamIdElement.style.borderColor = '#3b82f6';
+                    }, 1500);
+                }).catch(() => {
+                    // Fallback to selection
+                    selectText(teamIdElement);
+                });
+            }
+        }
+
+        // Payment info modal functions
+        function openPaymentInfoModal() {
+            document.getElementById('paymentInfoModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePaymentInfoModal() {
+            document.getElementById('paymentInfoModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
