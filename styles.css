@@ -2197,7 +2197,7 @@ section:nth-child(even) {
 
     .sponsor-logos {
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         align-items: flex-start !important;
         justify-content: flex-start !important;
         gap: 15px !important;
@@ -4231,6 +4231,7 @@ section:nth-child(even) {
         font-size: 1.8rem;
     }
 }
+
 
 
 
