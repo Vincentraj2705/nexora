@@ -2197,17 +2197,20 @@ section:nth-child(even) {
 
     .sponsor-logos {
         display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
+        flex-direction: row !important;        /* changed from column */
+        flex-wrap: wrap !important;            /* allow wrapping */
+        justify-content: center !important;    /* center rows */
+        align-items: center !important;        /* align nicely */
         gap: 15px !important;
         margin-top: 15px !important;
-    }
+}
 
     .sponsor-logos img {
+        width: calc(33.33% - 10px) !important;  /* 3 per row */
         max-width: 80px !important;
         height: auto !important;
-    }
+        
+   }
 }
 
 /* Hero Logo Styles */
@@ -4231,6 +4234,7 @@ section:nth-child(even) {
         font-size: 1.8rem;
     }
 }
+
 
 
 
