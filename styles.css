@@ -2190,7 +2190,7 @@ section:nth-child(even) {
         order: 3;
     }
 
-   /* Mobile sponsor section alignment */
+    /* Mobile sponsor section alignment */
     .sponsor-section {
         text-align: left !important;
     }
@@ -4234,7 +4234,6 @@ section:nth-child(even) {
         font-size: 1.8rem;
     }
 }
-
 
 
 
