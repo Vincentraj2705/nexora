@@ -2195,19 +2195,22 @@ section:nth-child(even) {
         text-align: left !important;
     }
 
+    @media (max-width: 768px) {
+
     .sponsor-logos {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 per row */
         gap: 15px !important;
+        justify-items: center !important;
         margin-top: 15px !important;
     }
 
     .sponsor-logos img {
-        max-width: 80px !important;
+        width: 100% !important;
+        max-width: 120px !important;
         height: auto !important;
     }
+
 }
 
 /* Hero Logo Styles */
@@ -4231,6 +4234,7 @@ section:nth-child(even) {
         font-size: 1.8rem;
     }
 }
+
 
 
 
