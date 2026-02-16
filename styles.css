@@ -2197,7 +2197,8 @@ section:nth-child(even) {
 
     .sponsor-logos {
         display: flex !important;
-        flex-direction: column !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
         align-items: flex-start !important;
         justify-content: flex-start !important;
         gap: 15px !important;
@@ -2205,7 +2206,7 @@ section:nth-child(even) {
     }
 
     .sponsor-logos img {
-        max-width: 80px !important;
+        max-width: 120px !important;
         height: auto !important;
     }
 }
@@ -4231,5 +4232,6 @@ section:nth-child(even) {
         font-size: 1.8rem;
     }
 }
+
 
 
