@@ -942,6 +942,33 @@ body {
     animation: fadeInUp 1s ease 0.6s backwards;
 }
 
+/* 6 Logos Grid (3x2 on mobile) */
+.hero-logos-grid-6 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+    align-items: center;
+    margin: 3rem 0 2rem;
+    animation: fadeInUp 1s ease 0.6s backwards;
+}
+
+/* 3 Logos Grid (2+1 on mobile) */
+.hero-logos-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-items: center;
+    align-items: center;
+    margin: 3rem 0 2rem;
+    animation: fadeInUp 1s ease 0.6s backwards;
+}
+
+.hero-logos-grid-3 .logo-item:nth-child(3) {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
 .logo-item {
     flex: 1;
     max-width: 200px;
@@ -2195,6 +2222,33 @@ section:nth-child(even) {
         text-align: left !important;
     }
 
+    /* Sponsor logos grid - 6 logos in 3x2 */
+    .sponsor-logos-6 {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+        margin-top: 15px !important;
+        align-items: center;
+        justify-items: center;
+    }
+
+    /* Sponsor logos grid - 3 logos in 2+1 */
+    .sponsor-logos-3 {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        margin-top: 15px !important;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .sponsor-logos-3 img:nth-child(3) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        margin-top: 10px;
+    }
+
+    /* Default sponsor logos (fallback) */
     .sponsor-logos {
         display: flex !important;
         flex-direction: row !important;
@@ -2205,8 +2259,10 @@ section:nth-child(even) {
         margin-top: 15px !important;
     }
 
-    .sponsor-logos img {
-        max-width: 120px !important;
+    .sponsor-logos img,
+    .sponsor-logos-6 img,
+    .sponsor-logos-3 img {
+        max-width: 80px !important;
         height: auto !important;
     }
 }
@@ -2645,12 +2701,36 @@ section:nth-child(even) {
         gap: 1.2rem;
     }
 
+    /* Mobile: 6 Logos in 3x2 grid */
+    .hero-logos-grid-6 {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0 1.5rem;
+        max-width: 100%;
+    }
+
+    /* Mobile: 3 Logos in 2+1 layout */
+    .hero-logos-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0 1.5rem;
+        max-width: 100%;
+    }
+
+    .hero-logos-grid-3 .logo-item:nth-child(3) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        margin-top: 0.5rem;
+    }
+
     .logo-item {
         max-width: 100px;
     }
 
     .logo-item img {
         width: 100%;
+        max-width: 80px;
+        height: auto;
     }
 
     .hero-single-logo img {
