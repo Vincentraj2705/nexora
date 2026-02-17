@@ -979,10 +979,10 @@ body {
 @media (min-width: 481px) {
     .hero-logos-grid-6 {
         display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        grid-template-rows: repeat(3, 1fr) !important;
-        gap: 2rem 3rem !important;
-        max-width: 700px !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+        max-width: 800px !important;
         margin: 3rem auto 2rem !important;
         justify-items: center !important;
         align-items: center !important;
@@ -990,17 +990,16 @@ body {
     
     .hero-logos-grid-3 {
         display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 2rem 3rem !important;
-        max-width: 500px !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2rem !important;
+        max-width: 600px !important;
         margin: 3rem auto 2rem !important;
         justify-items: center !important;
         align-items: center !important;
     }
     
     .hero-logos-grid-3 .logo-item:nth-child(3) {
-        grid-column: 1 / -1 !important;
-        justify-self: center !important;
+        /* All 3 logos in one row */
     }
     
     .logo-item {
@@ -1009,11 +1008,11 @@ body {
         align-items: center !important;
         height: 120px !important;
         width: 100% !important;
-        max-width: 250px !important;
+        max-width: 200px !important;
     }
     
     .logo-item img {
-        max-width: 200px !important;
+        max-width: 150px !important;
         max-height: 100px !important;
         width: auto !important;
         height: auto !important;
@@ -1024,22 +1023,22 @@ body {
 /* Tablet specific adjustments */
 @media (min-width: 481px) and (max-width: 768px) {
     .hero-logos-grid-6 {
-        gap: 1.5rem 2rem !important;
-        max-width: 600px !important;
+        gap: 1.5rem !important;
+        max-width: 700px !important;
     }
     
     .hero-logos-grid-3 {
-        gap: 1.5rem 2rem !important;
-        max-width: 400px !important;
+        gap: 1.5rem !important;
+        max-width: 500px !important;
     }
     
     .logo-item {
         height: 100px !important;
-        max-width: 200px !important;
+        max-width: 180px !important;
     }
     
     .logo-item img {
-        max-width: 150px !important;
+        max-width: 130px !important;
         max-height: 80px !important;
     }
 }
@@ -2275,32 +2274,30 @@ section:nth-child(even) {
     color: #ef4444;
 }
 
-/* Desktop Sponsor Logos - 2 per row */
+/* Desktop Sponsor Logos - 3 per row */
 .sponsor-logos,
 .sponsor-logos-6 {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 2rem 1.5rem !important;
     margin-top: 1.5rem !important;
     align-items: center !important;
     justify-items: center !important;
-    max-width: 350px !important;
+    max-width: 500px !important;
 }
 
 .sponsor-logos-3 {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 1.5rem !important;
     margin-top: 1.5rem !important;
     align-items: center !important;
     justify-items: center !important;
-    max-width: 300px !important;
+    max-width: 450px !important;
 }
 
 .sponsor-logos-3 img:nth-child(3) {
-    grid-column: 1 / -1 !important;
-    justify-self: center !important;
-    margin-top: 1rem !important;
+    /* No special positioning needed - all 3 logos in one row */
 }
 
 .sponsor-logos img,
