@@ -415,16 +415,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (result.status === 'success') {
                     // Sanitize response data before displaying
                     const teamId = sanitizeInput(String(result.teamId || 'N/A'));
+                    
+                    // IMPORTANT: Capture team size BEFORE form.reset()
+                    const currentTeamSize = teamSize; // This was captured earlier in the function
+                    
                     showMessage('success', `Registration successful! Your Team ID: ${teamId}. Check your email for details.`);
                     form.reset();
                     soloSection.style.display = 'none';
                     duoSection.style.display = 'none';
                     lastSubmission = now;
                     
-                    // Hide processing popup and show payment modal with team ID
+                    console.log('Before showing payment modal - Team Size:', currentTeamSize, 'Team ID:', teamId);
+                    
+                    // Hide processing popup and show payment modal with team ID and team size
                     hideProcessingPopup();
                     setTimeout(() => {
-                        showPaymentModal(teamId);
+                        // Pass the captured team size directly to the modal
+                        showPaymentModal(teamId, currentTeamSize);
                     }, 1000);
                 } else {
                     hideProcessingPopup();
@@ -484,15 +491,30 @@ function hideProcessingPopup() {
 }
 
 // Payment Modal Functions - Enhanced with proper amount updates
-function showPaymentModal(teamId) {
+function showPaymentModal(teamId, forceTeamSize = null) {
     const modal = document.getElementById('paymentModal');
     if (modal && teamId) {
         // Calculate payment amount based on team size
-        const teamSize = document.getElementById('teamSize')?.value || '1';
+        let teamSize = forceTeamSize || document.getElementById('teamSize')?.value || '1';
+        
+        // If team size is empty (form was reset), try to detect from visible sections
+        if (!teamSize || teamSize === '') {
+            const soloSection = document.getElementById('soloSection');
+            const duoSection = document.getElementById('duoSection');
+            
+            if (soloSection && soloSection.style.display !== 'none') {
+                teamSize = '1';
+            } else if (duoSection && duoSection.style.display !== 'none') {
+                teamSize = '2';
+            } else {
+                teamSize = '1'; // Default fallback
+            }
+        }
+        
         const amountPerHead = 120;
         const totalAmount = parseInt(teamSize) * amountPerHead;
         
-        console.log('Showing payment modal - Team Size:', teamSize, 'Total Amount:', totalAmount);
+        console.log('Showing payment modal - Team Size:', teamSize, 'Total Amount:', totalAmount, 'Forced Team Size:', forceTeamSize);
         
         // Update all Team ID displays in the modal
         const teamIdElements = {
@@ -507,24 +529,52 @@ function showPaymentModal(teamId) {
         });
         
         // Update ALL payment amount displays in the modal with correct amounts
+        console.log('Updating modal elements with amount:', totalAmount);
         
         // 1. Update the main payment amount span in the modal
         const modalAmountSpan = modal.querySelector('.modal-amount-span');
         if (modalAmountSpan) {
             modalAmountSpan.textContent = `₹${totalAmount}`;
+            console.log('Updated modal amount span:', modalAmountSpan.textContent);
+        } else {
+            console.error('modal-amount-span not found!');
         }
         
         // 2. Update the payment text
         const paymentAmountText = modal.querySelector('.payment-amount-text');
         if (paymentAmountText) {
             paymentAmountText.innerHTML = `Pay <span class="modal-amount-span" style="color: var(--nexora-gold); font-weight: bold;">₹${totalAmount}</span> to confirm your registration`;
+            console.log('Updated payment amount text');
+        } else {
+            console.error('payment-amount-text not found!');
         }
         
         // 3. Update Pay Now button text with correct amount
         const payBtnText = modal.querySelector('.pay-btn-text');
         if (payBtnText) {
             payBtnText.textContent = `Pay ₹${totalAmount} Now via UPI (Team ID Auto-Added)`;
+            console.log('Updated pay button text:', payBtnText.textContent);
+        } else {
+            console.error('pay-btn-text not found!');
         }
+        
+        // 4. Force update all elements with class modal-amount-span (backup method)
+        const allAmountSpans = modal.querySelectorAll('.modal-amount-span');
+        allAmountSpans.forEach((span, index) => {
+            span.textContent = `₹${totalAmount}`;
+            console.log(`Updated amount span ${index}:`, span.textContent);
+        });
+        
+        // 5. Direct approach - update by searching for ₹120 text
+        const allSpans = modal.querySelectorAll('span');
+        allSpans.forEach(span => {
+            if (span.textContent.includes('₹120')) {
+                span.textContent = span.textContent.replace('₹120', `₹${totalAmount}`);
+                console.log('Replaced ₹120 with:', span.textContent);
+            }
+        });
+        
+        console.log('All modal updates completed');
         
         // 4. Update QR code images if you have different QR codes for different amounts
         const qrImages = modal.querySelectorAll('.qr-code-image, .mobile-qr-code-image');
@@ -879,4 +929,54 @@ function testPaymentModal(teamSize = '2', teamId = 'TEST-ABC123') {
             console.error('Payment amounts don\'t match! Expected:', expectedAmount, 'Got:', modal?.getAttribute('data-amount'));
         }
     }, 100);
+}
+
+// Force update payment modal amounts (call this if amounts are stuck)
+function forceUpdateModalAmounts() {
+    console.log('Force updating modal amounts...');
+    
+    const teamSize = document.getElementById('teamSize')?.value || '1';
+    const totalAmount = parseInt(teamSize) * 120;
+    const modal = document.getElementById('paymentModal');
+    
+    if (!modal) {
+        console.error('Payment modal not found!');
+        return;
+    }
+    
+    console.log(`Updating modal for ${teamSize} members = ₹${totalAmount}`);
+    
+    // Update all text content that contains ₹120
+    const allElements = modal.querySelectorAll('*');
+    allElements.forEach(element => {
+        if (element.textContent && element.textContent.includes('₹120')) {
+            console.log('Found element with ₹120:', element.textContent);
+            element.textContent = element.textContent.replace(/₹120/g, `₹${totalAmount}`);
+            console.log('Updated to:', element.textContent);
+        }
+    });
+    
+    // Update modal data attributes
+    modal.setAttribute('data-amount', totalAmount);
+    modal.setAttribute('data-team-size', teamSize);
+    
+    console.log('Force update completed!');
+}
+
+// Quick test function - call this from console to test current modal state
+function quickTestModal() {
+    console.log('=== Quick Modal Test ===');
+    const teamSize = document.getElementById('teamSize')?.value;
+    console.log('Current team size from form:', teamSize);
+    
+    // Test with 2 members
+    console.log('Testing with 2 members...');
+    showPaymentModal('TEST-123', '2');
+    
+    setTimeout(() => {
+        const modal = document.getElementById('paymentModal');
+        console.log('Modal amount span:', document.querySelector('.modal-amount-span')?.textContent);
+        console.log('Pay button text:', document.querySelector('.pay-btn-text')?.textContent);
+        console.log('Modal data-amount:', modal?.getAttribute('data-amount'));
+    }, 500);
 }
