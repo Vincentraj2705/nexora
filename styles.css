@@ -2275,6 +2275,49 @@ section:nth-child(even) {
     color: #ef4444;
 }
 
+/* Desktop Sponsor Logos - 2 per row */
+.sponsor-logos,
+.sponsor-logos-6 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem 1.5rem !important;
+    margin-top: 1.5rem !important;
+    align-items: center !important;
+    justify-items: center !important;
+    max-width: 350px !important;
+}
+
+.sponsor-logos-3 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+    margin-top: 1.5rem !important;
+    align-items: center !important;
+    justify-items: center !important;
+    max-width: 300px !important;
+}
+
+.sponsor-logos-3 img:nth-child(3) {
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    margin-top: 1rem !important;
+}
+
+.sponsor-logos img,
+.sponsor-logos-6 img,
+.sponsor-logos-3 img {
+    max-width: 120px !important;
+    height: auto !important;
+    object-fit: contain !important;
+    transition: transform 0.3s ease !important;
+}
+
+.sponsor-logos img:hover,
+.sponsor-logos-6 img:hover,
+.sponsor-logos-3 img:hover {
+    transform: scale(1.05) !important;
+}
+
 /* Footer Mobile Reordering */
 @media (max-width: 768px) {
     .footer-content {
@@ -2299,50 +2342,26 @@ section:nth-child(even) {
         text-align: left !important;
     }
 
-    /* Sponsor logos grid - 6 logos in 2x3 on desktop, 3x2 on mobile */
+    /* Mobile: 3 logos per row */
+    .sponsor-logos,
     .sponsor-logos-6 {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 20px !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
         margin-top: 15px !important;
-        align-items: center;
-        justify-items: center;
-        max-width: 400px;
+        max-width: 100% !important;
     }
 
-    /* Sponsor logos grid - 3 logos in 2+1 layout */
     .sponsor-logos-3 {
-        display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 15px !important;
         margin-top: 15px !important;
-        align-items: center;
-        justify-items: center;
-        max-width: 300px;
-    }
-
-    .sponsor-logos-3 img:nth-child(3) {
-        grid-column: 1 / -1;
-        justify-self: center;
-        margin-top: 10px;
-    }
-
-    /* Default sponsor logos (fallback) */
-    .sponsor-logos {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 15px !important;
-        margin-top: 15px !important;
-        align-items: center;
-        justify-items: center;
-        max-width: 400px;
+        max-width: 100% !important;
     }
 
     .sponsor-logos img,
     .sponsor-logos-6 img,
     .sponsor-logos-3 img {
-        max-width: 120px !important;
-        height: auto !important;
+        max-width: 80px !important;
     }
 }
 
