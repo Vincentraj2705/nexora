@@ -89,10 +89,69 @@ function showMessage(type, text) {
 
 // Handle team size change
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Registration form script loaded');
+    
     const teamSizeSelect = document.getElementById('teamSize');
     const soloSection = document.getElementById('soloSection');
     const duoSection = document.getElementById('duoSection');
     const form = document.getElementById('registrationForm');
+    
+    console.log('Form elements found:', {
+        teamSizeSelect: !!teamSizeSelect,
+        soloSection: !!soloSection, 
+        duoSection: !!duoSection,
+        form: !!form
+    });
+    
+    if (!form) {
+        console.error('Registration form not found! Check if the form ID is correct.');
+        return;
+    }
+    
+    // Function to update payment amounts based on team size
+    function updatePaymentAmounts(teamSize) {
+        const amountPerHead = 120;
+        const totalAmount = parseInt(teamSize) * amountPerHead;
+        
+        console.log('Updating payment amounts for team size:', teamSize, 'Total:', totalAmount);
+        
+        // Update all payment amount displays on the page
+        const paymentElements = {
+            display: document.querySelector('.payment-amount-display'),
+            modal: document.querySelector('.payment-amount-modal'),
+            qr: document.querySelector('.qr-payment-amount'),
+            grid: document.querySelector('.payment-amount-grid'),
+            text: document.querySelector('.payment-amount-text')
+        };
+        
+        const displayText = teamSize === '1' ? 
+            `₹${totalAmount}` : 
+            `₹${totalAmount} (₹${amountPerHead} × ${teamSize} members)`;
+        
+        if (paymentElements.display) {
+            paymentElements.display.textContent = displayText;
+        }
+        if (paymentElements.modal) {
+            paymentElements.modal.textContent = displayText;
+        }
+        if (paymentElements.qr) {
+            paymentElements.qr.textContent = displayText;
+        }
+        if (paymentElements.grid) {
+            paymentElements.grid.textContent = displayText;
+        }
+        if (paymentElements.text) {
+            paymentElements.text.innerHTML = `Pay <span style="color: var(--nexora-gold); font-weight: bold;">${displayText}</span> to confirm your registration`;
+        }
+        
+        // Update the payment information card amount
+        const paymentInfoAmount = document.querySelector('#paymentInfoCard .payment-amount-display');
+        if (paymentInfoAmount) {
+            paymentInfoAmount.textContent = displayText;
+        }
+        
+        console.log('Payment amounts updated successfully');
+    }
     
     // Team size change handler
     if (teamSizeSelect) {
@@ -111,11 +170,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (teamSize === '1') {
                 soloSection.style.display = 'block';
                 enableFields(soloSection);
+                updatePaymentAmounts('1');
             } else if (teamSize === '2') {
                 duoSection.style.display = 'block';
                 enableFields(duoSection);
+                updatePaymentAmounts('2');
             }
         });
+        
+        // Set initial payment display for default selection
+        const initialTeamSize = teamSizeSelect.value;
+        if (initialTeamSize) {
+            updatePaymentAmounts(initialTeamSize);
+        } else {
+            // Default to 1 member if no selection
+            updatePaymentAmounts('1');
+        }
     }
     
     // Helper function to clear and disable fields
@@ -142,30 +212,42 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form submission handler
     if (form) {
+        console.log('Adding submit event listener to form');
+        
         form.addEventListener('submit', async function(e) {
-            e.preventDefault();
+            try {
+                console.log('Form submit event triggered');
+                e.preventDefault();
+                
+                // Get basic form values first
+                const teamName = document.getElementById('teamName').value.trim();
+                const eventName = document.getElementById('eventName').value;
+                const teamSize = document.getElementById('teamSize').value;
+                
+                console.log('Form values:', { teamName, eventName, teamSize });
             
-            // Honeypot check (anti-bot)
+            // Honeypot check (anti-bot) - Enhanced
             if (!checkHoneypot()) {
-                console.log('Bot detected');
+                console.log('Bot detected via honeypot');
+                showMessage('error', 'Invalid submission detected.');
+                return;
+            }
+            
+            // Additional bot detection
+            const now = Date.now();
+            if (now - lastSubmission < 5000 && lastSubmission > 0) {
+                showMessage('error', 'Please slow down. Wait a moment before submitting.');
                 return;
             }
             
             // Rate limiting check
-            const now = Date.now();
             if (now - lastSubmission < SUBMISSION_COOLDOWN) {
                 const remainingTime = Math.ceil((SUBMISSION_COOLDOWN - (now - lastSubmission)) / 1000);
                 showMessage('error', `Please wait ${remainingTime} seconds before submitting again.`);
                 return;
             }
             
-            // Get team size
-            const teamSize = document.getElementById('teamSize').value;
-            
-            // Validate basic fields
-            const teamName = document.getElementById('teamName').value.trim();
-            const eventName = document.getElementById('eventName').value;
-            
+            // Enhanced validation and security checks
             if (!teamName || !eventName || !teamSize) {
                 showMessage('error', 'Please fill in all required fields.');
                 return;
@@ -176,10 +258,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Check for suspicious patterns
-            const suspiciousPatterns = /<script|javascript:|onerror=|onclick=/i;
-            if (suspiciousPatterns.test(teamName)) {
-                showMessage('error', 'Invalid team name. Please remove any special characters or code.');
+            // Check for suspicious patterns (XSS, script injection attempts)
+            const suspiciousPatterns = /<script|javascript:|onerror=|onclick=|onload=|eval\(|alert\(/gi;
+            const allInputs = [teamName, 
+                document.getElementById('soloName')?.value || '', 
+                document.getElementById('leaderName')?.value || '', 
+                document.getElementById('mateName')?.value || '',
+                document.getElementById('soloCollege')?.value || '',
+                document.getElementById('duoCollege')?.value || ''
+            ].join(' ');
+            
+            if (suspiciousPatterns.test(allInputs)) {
+                console.log('Suspicious input detected:', allInputs.match(suspiciousPatterns));
+                showMessage('error', 'Invalid characters detected. Please remove any special code or scripts from your input.');
                 return;
             }
             
@@ -206,15 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Enhanced phone validation
+                // Enhanced security validation for solo member
                 if (!validatePhone(phone)) {
                     showMessage('error', 'Please enter a valid 10-digit Indian mobile number.');
                     return;
                 }
                 
-                // Check for suspicious patterns
+                // Check for suspicious patterns in all fields
                 if (suspiciousPatterns.test(name + college)) {
-                    showMessage('error', 'Invalid input detected. Please remove any special characters or code.');
+                    showMessage('error', 'Invalid characters detected. Please remove any special code or scripts.');
                     return;
                 }
             } else if (teamSize === '2') {
@@ -240,36 +331,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Enhanced phone validation
+                // Enhanced security validation for duo team
                 if (!validatePhone(phone)) {
                     showMessage('error', 'Please enter a valid 10-digit Indian mobile number.');
                     return;
                 }
                 
-                // Check for suspicious patterns
+                // Check for suspicious patterns in all fields
                 if (suspiciousPatterns.test(leaderName + mateName + college)) {
-                    showMessage('error', 'Invalid input detected. Please remove any special characters or code.');
+                    showMessage('error', 'Invalid characters detected. Please remove any special code or scripts.');
                     return;
                 }
             }
             
             // Disable submit button and show processing popup
             const submitBtn = form.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            let originalText = '<i class="fas fa-paper-plane"></i> Submit Registration'; // Default fallback
+            
+            if (submitBtn) {
+                originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            } else {
+                console.error('Submit button not found!');
+                showMessage('error', 'Submit button not found. Please refresh the page.');
+                return;
+            }
             
             // Show processing popup
             showProcessingPopup();
             
             try {
-                // Prepare form data as URL-encoded string with sanitization
+                // Prepare form data as URL-encoded string with sanitization and security data
                 const formData = new URLSearchParams();
                 formData.append('teamName', sanitizeInput(teamName));
                 formData.append('eventName', sanitizeInput(eventName));
                 formData.append('teamSize', teamSize);
                 formData.append('timestamp', now);
                 formData.append('userAgent', navigator.userAgent.substring(0, 200));
+                formData.append('userIP', 'client'); // Real IP will be detected server-side
+                formData.append('website', document.getElementById('website')?.value || ''); // Honeypot field
                 
                 if (teamSize === '1') {
                     // Solo member data
@@ -341,10 +442,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } finally {
                 // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+                const submitBtn = form.querySelector('.submit-btn');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText || '<i class="fas fa-paper-plane"></i> Submit Registration';
+                }
+            }
+            } catch (formError) {
+                console.error('Form submission error:', formError);
+                showMessage('error', 'Form submission error occurred. Please try again.');
+                
+                // Re-enable submit button
+                const submitBtn = form.querySelector('.submit-btn');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Registration';
+                }
             }
         });
+    } else {
+        console.error('Registration form element not found! Make sure the form has id="registrationForm"');
+        alert('Error: Registration form not found. Please check the page setup.');
     }
 });
 
@@ -365,10 +483,17 @@ function hideProcessingPopup() {
     }
 }
 
-// Payment Modal Functions - Simplified design with device-specific layout
+// Payment Modal Functions - Enhanced with proper amount updates
 function showPaymentModal(teamId) {
     const modal = document.getElementById('paymentModal');
     if (modal && teamId) {
+        // Calculate payment amount based on team size
+        const teamSize = document.getElementById('teamSize')?.value || '1';
+        const amountPerHead = 120;
+        const totalAmount = parseInt(teamSize) * amountPerHead;
+        
+        console.log('Showing payment modal - Team Size:', teamSize, 'Total Amount:', totalAmount);
+        
         // Update all Team ID displays in the modal
         const teamIdElements = {
             main: document.getElementById('teamIdDisplay'),
@@ -381,12 +506,57 @@ function showPaymentModal(teamId) {
             if (el) el.textContent = teamId;
         });
         
+        // Update ALL payment amount displays in the modal with correct amounts
+        
+        // 1. Update the main payment amount span in the modal
+        const modalAmountSpan = modal.querySelector('.modal-amount-span');
+        if (modalAmountSpan) {
+            modalAmountSpan.textContent = `₹${totalAmount}`;
+        }
+        
+        // 2. Update the payment text
+        const paymentAmountText = modal.querySelector('.payment-amount-text');
+        if (paymentAmountText) {
+            paymentAmountText.innerHTML = `Pay <span class="modal-amount-span" style="color: var(--nexora-gold); font-weight: bold;">₹${totalAmount}</span> to confirm your registration`;
+        }
+        
+        // 3. Update Pay Now button text with correct amount
+        const payBtnText = modal.querySelector('.pay-btn-text');
+        if (payBtnText) {
+            payBtnText.textContent = `Pay ₹${totalAmount} Now via UPI (Team ID Auto-Added)`;
+        }
+        
+        // 4. Update QR code images if you have different QR codes for different amounts
+        const qrImages = modal.querySelectorAll('.qr-code-image, .mobile-qr-code-image');
+        qrImages.forEach(img => {
+            if (totalAmount === 240) {
+                img.src = 'upi_payment_240rs.png';
+                img.onerror = function() {
+                    // Fallback to generic QR if specific amount QR doesn't exist
+                    this.src = 'upi_payment_120rs.png';
+                };
+            } else {
+                img.src = 'upi_payment_120rs.png';
+            }
+        });
+        
+        // Store the amount and team data for UPI function
+        modal.setAttribute('data-amount', totalAmount);
+        modal.setAttribute('data-team-id', teamId);
+        modal.setAttribute('data-team-size', teamSize);
+        
+        console.log('Modal data set:', {
+            amount: totalAmount,
+            teamId: teamId,
+            teamSize: teamSize
+        });
+        
         // Detect device type
         const isMobile = detectDevice();
         
         // Configure display based on device - simplified
         const qrSection = document.getElementById('qrSection');
-        const payButton = document.querySelector('.pay-now-btn');
+        const payButton = modal.querySelector('.pay-now-btn');
         const mobileQrSection = document.getElementById('mobileQrSection');
         
         if (isMobile) {
@@ -405,7 +575,7 @@ function showPaymentModal(teamId) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         
-        console.log('Payment modal configured for:', isMobile ? 'Mobile' : 'Desktop', '| Team ID:', teamId);
+        console.log('Payment modal configured for:', isMobile ? 'Mobile' : 'Desktop', '| Team ID:', teamId, '| Amount:', totalAmount);
     }
 }
 
@@ -426,47 +596,66 @@ function isMobile() {
 
 
 
-// Open UPI app on mobile - Enhanced version with auto team ID
+// Open UPI app on mobile - Enhanced version with dynamic amount
 function openUPIApp() {
-    // Get team ID with multiple fallback attempts
-    let teamId = document.getElementById('teamIdDisplay')?.textContent?.trim();
+    // Get team ID and amount from modal data (set by showPaymentModal)
+    const modal = document.getElementById('paymentModal');
+    let teamId = 'UNKNOWN';
+    let totalAmount = 120; // Default fallback
+    let teamSize = '1';
     
-    if (!teamId || teamId === '-' || teamId === '') {
-        // Try other team ID elements as fallback
-        teamId = document.getElementById('paymentTeamId')?.textContent?.trim() ||
+    if (modal) {
+        const modalAmount = modal.getAttribute('data-amount');
+        const modalTeamId = modal.getAttribute('data-team-id');
+        const modalTeamSize = modal.getAttribute('data-team-size');
+        
+        if (modalAmount) totalAmount = parseInt(modalAmount);
+        if (modalTeamId) teamId = modalTeamId;
+        if (modalTeamSize) teamSize = modalTeamSize;
+        
+        console.log('Using modal data:', { totalAmount, teamId, teamSize });
+    } else {
+        console.warn('Modal not found, using fallback method');
+        
+        // Fallback: Get from form and calculate
+        teamId = document.getElementById('teamIdDisplay')?.textContent?.trim() ||
+                 document.getElementById('paymentTeamId')?.textContent?.trim() ||
                  document.getElementById('qrTeamId')?.textContent?.trim() ||
-                 document.getElementById('mobileQrTeamId')?.textContent?.trim() ||
                  'UNKNOWN';
+        
+        teamSize = document.getElementById('teamSize')?.value || '1';
+        totalAmount = parseInt(teamSize) * 120;
     }
     
-    console.log('Team ID retrieved:', teamId);
-    console.log('Team ID element content:', document.getElementById('teamIdDisplay')?.textContent);
+    console.log('Opening UPI App with:', {
+        teamId: teamId,
+        amount: totalAmount,
+        teamSize: teamSize
+    });
     
     // Use shorter transaction note to avoid UPI app limitations
-    // Format: "NEXORA-{TeamID}" to keep it concise
     const transactionNote = `NEXORA-${teamId}`;
     
     // Double-encode for better compatibility with different UPI apps
     const encodedNote = encodeURIComponent(transactionNote);
-    const upiUrl = `upi://pay?pa=indirasuthanvece@oksbi&pn=Indirasuthan%20Vijaya&am=120&cu=INR&tn=${encodedNote}&mc=5411`;
+    const upiUrl = `upi://pay?pa=indirasuthanvece@oksbi&pn=Indirasuthan%20Vijaya&am=${totalAmount}&cu=INR&tn=${encodedNote}&mc=5411`;
     
-    console.log('Transaction Note:', transactionNote);
     console.log('UPI URL:', upiUrl);
     
     try {
         // Try to open UPI app
         window.location.href = upiUrl;
         
-        // Show success message with debugging info
+        // Show success message with complete details
         setTimeout(() => {
-            alert(`✅ UPI Payment Opened Successfully!\n\nTeam ID: ${teamId}\nPayment Note: ${transactionNote}\n\n⚠️ VERIFY: Check that your payment app shows the note "${transactionNote}" before confirming payment.\n\nIf the note is missing, please add it manually.`);
+            alert(`✅ UPI Payment Opened Successfully!\\n\\nTeam ID: ${teamId}\\nTeam Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\\nAmount: ₹${totalAmount}\\nPayment Note: ${transactionNote}\\n\\n⚠️ VERIFY: Check that your payment app shows:\\n• Amount: ₹${totalAmount}\\n• Note: "${transactionNote}"\\n\\nIf the details don't match, please cancel and try again.`);
         }, 1500);
         
     } catch (error) {
         console.error('Error opening UPI app:', error);
         
         // Fallback alert with manual payment details
-        alert(`❌ UPI App Error\n\nManual Payment Details:\n• UPI ID: indirasuthanvece@oksbi\n• Amount: ₹120\n• Note: ${transactionNote}\n• Team ID: ${teamId}\n\nPlease make payment manually and include the note exactly as shown above.`);
+        alert(`❌ UPI App Error\\n\\nManual Payment Details:\\n• UPI ID: indirasuthanvece@oksbi\\n• Amount: ₹${totalAmount}\\n• Note: ${transactionNote}\\n• Team ID: ${teamId}\\n• Team Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\\n\\nPlease make payment manually and include the note exactly as shown above.`);
     }
 }
 
@@ -597,4 +786,97 @@ function copyToClipboard(text, type) {
         console.error('Failed to copy:', err);
         showMessage('error', 'Failed to copy. Please copy manually.');
     });
+}
+
+// Debug function to check payment amounts (for testing)
+function debugPaymentAmounts() {
+    const teamSize = document.getElementById('teamSize')?.value || 'none';
+    const modal = document.getElementById('paymentModal');
+    const modalAmount = modal?.getAttribute('data-amount') || 'not set';
+    const modalTeamId = modal?.getAttribute('data-team-id') || 'not set';
+    
+    console.log('=== Payment Debug Info ===');
+    console.log('Current Team Size:', teamSize);
+    console.log('Modal Amount:', modalAmount);
+    console.log('Modal Team ID:', modalTeamId);
+    
+    // Check all payment amount elements
+    const elements = {
+        display: document.querySelector('.payment-amount-display'),
+        modal: document.querySelector('.payment-amount-modal'),
+        qr: document.querySelector('.qr-payment-amount'),
+        grid: document.querySelector('.payment-amount-grid'),
+        modalSpan: document.querySelector('.modal-amount-span')
+    };
+    
+    Object.entries(elements).forEach(([name, el]) => {
+        console.log(`${name}:`, el ? `"${el.textContent || el.innerHTML}"` : 'NOT FOUND');
+    });
+    
+    const expectedAmount = teamSize !== 'none' ? parseInt(teamSize) * 120 : 'N/A';
+    console.log('Expected Amount:', expectedAmount);
+    
+    return { teamSize, modalAmount, modalTeamId, expectedAmount };
+}
+
+// Test function to check if form submission is working
+function testFormSubmission() {
+    const form = document.getElementById('registrationForm');
+    if (!form) {
+        console.error('Form not found!');
+        return false;
+    }
+    
+    console.log('Form found:', form);
+    console.log('Form action:', form.action);
+    console.log('Form method:', form.method);
+    
+    const submitBtn = form.querySelector('.submit-btn');
+    console.log('Submit button found:', !!submitBtn);
+    console.log('Submit button disabled:', submitBtn?.disabled);
+    
+    // Test if form elements are accessible
+    const elements = {
+        teamName: document.getElementById('teamName'),
+        eventName: document.getElementById('eventName'),
+        teamSize: document.getElementById('teamSize')
+    };
+    
+    console.log('Form elements:', elements);
+    
+    return true;
+}
+
+// Test function to simulate payment modal with different team sizes
+function testPaymentModal(teamSize = '2', teamId = 'TEST-ABC123') {
+    console.log(`Testing payment modal with ${teamSize} members`);
+    
+    // Temporarily set team size for testing
+    const teamSizeSelect = document.getElementById('teamSize');
+    if (teamSizeSelect) {
+        teamSizeSelect.value = teamSize;
+    }
+    
+    // Show payment modal
+    showPaymentModal(teamId);
+    
+    // Check if amounts are correct
+    setTimeout(() => {
+        const modal = document.getElementById('paymentModal');
+        const expectedAmount = parseInt(teamSize) * 120;
+        
+        console.log('=== Payment Modal Test Results ===');
+        console.log('Expected Amount:', expectedAmount);
+        console.log('Modal data-amount:', modal?.getAttribute('data-amount'));
+        console.log('Modal amount span text:', document.querySelector('.modal-amount-span')?.textContent);
+        console.log('Pay button text:', document.querySelector('.pay-btn-text')?.textContent);
+        
+        // Verify amounts
+        const isCorrect = modal?.getAttribute('data-amount') == expectedAmount;
+        console.log('Payment amounts correct:', isCorrect ? '✅' : '❌');
+        
+        if (!isCorrect) {
+            console.error('Payment amounts don\'t match! Expected:', expectedAmount, 'Got:', modal?.getAttribute('data-amount'));
+        }
+    }, 100);
 }

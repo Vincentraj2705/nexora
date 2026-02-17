@@ -50,7 +50,7 @@ function updateEventStatus() {
         } else {
             // Registration open
             messageBanner.style.background = 'linear-gradient(90deg, #ff9800 0%, #ffd700 50%, #ff9800 100%)';
-            messageTextEl.textContent = '🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 🎉';
+            messageTextEl.textContent = '🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 per head 🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 per head 🎉';
         }
     }
 }

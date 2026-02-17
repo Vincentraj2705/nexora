@@ -184,7 +184,7 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
                     <div>
                         <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Registration Fee</p>
-                        <p style="color: var(--nexora-gold); font-size: 1.5rem; font-weight: bold; margin: 0;">₹120</p>
+                        <p class="payment-amount-display" style="color: var(--nexora-gold); font-size: 1.5rem; font-weight: bold; margin: 0;">₹120 per head</p>
                     </div>
                     <div>
                         <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">UPI ID</p>
@@ -218,7 +218,7 @@
                 </h2>
                 <div style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(220, 38, 38, 0.2)); border: 2px solid var(--nexora-orange); border-radius: 15px; padding: 1.5rem; text-align: center; margin: 2rem 0;">
                     <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 0.5rem;">Registration Fee</p>
-                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--nexora-gold); margin: 0;">₹120</h1>
+                    <h1 class="payment-amount-modal" style="font-size: 3rem; font-weight: bold; color: var(--nexora-gold); margin: 0;">₹120 per head</h1>
                 </div>
             </div>
 
@@ -233,7 +233,7 @@
                 </div>
                 <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                     <p style="color: #22c55e; margin: 0; font-weight: bold;">
-                        <i class="fas fa-mobile-alt"></i> Open any UPI app → Scan QR → Add Team ID in payment note → Pay ₹120
+                        <i class="fas fa-mobile-alt"></i> Open any UPI app → Scan QR → Add Team ID in payment note → Pay <span class="qr-payment-amount">₹120 per head</span>
                     </p>
                 </div>
             </div>
@@ -258,7 +258,7 @@
                 
                 <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
                     <label style="font-weight: bold; color: var(--nexora-gold); display: block; margin-bottom: 0.5rem;">Amount:</label>
-                    <div style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px;">₹120</div>
+                    <div class="payment-amount-grid" style="font-family: monospace; font-size: 1.1rem; background: rgba(0, 0, 0, 0.3); padding: 0.7rem; border-radius: 5px;">₹120 per head</div>
                 </div>
 
                 <div style="background: rgba(255, 152, 0, 0.1); border-radius: 10px; padding: 1rem; color: #e2e8f0;">
@@ -306,13 +306,13 @@
             </div>
 
             <div class="payment-amount-main" style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(220, 38, 38, 0.2)); border: 2px solid var(--nexora-orange); border-radius: 15px; padding: 1.5rem; text-align: center; margin: 2rem 0;">
-                <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 0.5rem;">Pay <span style="color: var(--nexora-gold); font-weight: bold;">₹120</span> to confirm your registration</p>
+                <p class="payment-amount-text" style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 0.5rem;">Pay <span class="modal-amount-span" style="color: var(--nexora-gold); font-weight: bold;">₹120</span> to confirm your registration</p>
             </div>
 
             <!-- Pay Now Button (Mobile Only) -->
             <button class="pay-now-btn" onclick="openUPIApp()" style="background: linear-gradient(45deg, var(--nexora-orange), var(--nexora-gold)); color: #000; border: none; padding: 1rem 2rem; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; width: 100%; margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                 <i class="fas fa-mobile-alt"></i>
-                Click Here To Pay Now via UPI (Team ID Auto-Added)
+                <span class="pay-btn-text">Pay ₹120 Now via UPI (Team ID Auto-Added)</span>
             </button>
 
             <!-- QR Code Section -->
@@ -321,7 +321,7 @@
                     <i class="fas fa-qrcode"></i> Scan the QR to pay
                 </h3>
                 <div style="background: white; padding: 1rem; border-radius: 15px; display: inline-block; margin: 1rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
-                    <img src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 200px; height: 200px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <img class="qr-code-image" src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 200px; height: 200px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <div style="display: none; color: #dc2626; font-weight: bold; padding: 2rem;">QR Image not found</div>
                 </div>
             </div>
@@ -332,7 +332,7 @@
                     <i class="fas fa-qrcode"></i> Scan the QR to pay
                 </h4>
                 <div style="background: white; padding: 1rem; border-radius: 15px; display: inline-block; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
-                    <img src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 150px; height: 150px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <img class="mobile-qr-code-image" src="upi_payment_120rs.png" alt="UPI Payment QR Code" style="width: 150px; height: 150px; border-radius: 10px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <div style="display: none; color: #dc2626; font-weight: bold; padding: 2rem; text-align: center;">QR Image not found</div>
                 </div>
             </div>
@@ -372,15 +372,6 @@
                             </a>
                             <a href="#" target="_blank" rel="noopener noreferrer">
                                 <img src="giftogift-logo.png" alt="Giftogift Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
-                            </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer">
-                                <img src="rjr.png" alt="RJR Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
-                            </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer">
-                                <img src="skr.png" alt="skr Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
-                            </a>
-                            <a href="#" target="_blank" rel="noopener noreferrer">
-                                <img src="abini.png" alt="Abini Sponsor" style="max-width: 120px;" onerror="this.style.display='none'">
                             </a>
                         </div>
                     </div>
@@ -556,7 +547,6 @@
     </script>
 </body>
 </html>
-
 
 
 
