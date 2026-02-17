@@ -942,18 +942,21 @@ body {
     animation: fadeInUp 1s ease 0.6s backwards;
 }
 
-/* 6 Logos Grid (3x2 on mobile) */
+/* 6 Logos Grid (2x3 on desktop, 3x2 on mobile) */
 .hero-logos-grid-6 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     justify-items: center;
     align-items: center;
     margin: 3rem 0 2rem;
     animation: fadeInUp 1s ease 0.6s backwards;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* 3 Logos Grid (2+1 on mobile) */
+/* 3 Logos Grid (2+1 layout) */
 .hero-logos-grid-3 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -962,6 +965,9 @@ body {
     align-items: center;
     margin: 3rem 0 2rem;
     animation: fadeInUp 1s ease 0.6s backwards;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-logos-grid-3 .logo-item:nth-child(3) {
@@ -970,11 +976,11 @@ body {
 }
 
 .logo-item {
-    flex: 1;
-    max-width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 120px;
 }
 
 .logo-item img {
@@ -984,6 +990,8 @@ body {
     filter: drop-shadow(0 0 20px rgba(255, 152, 0, 0.6));
     transition: all 0.3s ease;
     animation: logoEntrance 1.5s ease-out 0.8s backwards;
+    max-width: 200px;
+    max-height: 100px;
 }
 
 /* Single Hero Logo */
@@ -2222,17 +2230,18 @@ section:nth-child(even) {
         text-align: left !important;
     }
 
-    /* Sponsor logos grid - 6 logos in 3x2 */
+    /* Sponsor logos grid - 6 logos in 2x3 on desktop, 3x2 on mobile */
     .sponsor-logos-6 {
         display: grid !important;
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 15px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
         margin-top: 15px !important;
         align-items: center;
         justify-items: center;
+        max-width: 400px;
     }
 
-    /* Sponsor logos grid - 3 logos in 2+1 */
+    /* Sponsor logos grid - 3 logos in 2+1 layout */
     .sponsor-logos-3 {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
@@ -2240,6 +2249,7 @@ section:nth-child(even) {
         margin-top: 15px !important;
         align-items: center;
         justify-items: center;
+        max-width: 300px;
     }
 
     .sponsor-logos-3 img:nth-child(3) {
@@ -2250,19 +2260,19 @@ section:nth-child(even) {
 
     /* Default sponsor logos (fallback) */
     .sponsor-logos {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 15px !important;
         margin-top: 15px !important;
+        align-items: center;
+        justify-items: center;
+        max-width: 400px;
     }
 
     .sponsor-logos img,
     .sponsor-logos-6 img,
     .sponsor-logos-3 img {
-        max-width: 80px !important;
+        max-width: 120px !important;
         height: auto !important;
     }
 }
@@ -2584,6 +2594,34 @@ section:nth-child(even) {
 
 /* Responsive Design - Mobile */
 @media (max-width: 480px) {
+    /* Mobile-specific logo adjustments */
+    .hero-logos-grid-6 {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1rem;
+    }
+    
+    .sponsor-logos,
+    .sponsor-logos-6 {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 10px !important;
+        max-width: 100% !important;
+    }
+    
+    .sponsor-logos img,
+    .sponsor-logos-6 img,
+    .sponsor-logos-3 img {
+        max-width: 60px !important;
+    }
+    
+    .logo-item {
+        height: 60px;
+    }
+    
+    .logo-item img {
+        max-width: 60px;
+        max-height: 45px;
+    }
+    
     .hamburger {
         display: flex;
     }
@@ -2724,12 +2762,14 @@ section:nth-child(even) {
     }
 
     .logo-item {
-        max-width: 100px;
+        height: 80px;
+        width: 100%;
     }
 
     .logo-item img {
         width: 100%;
         max-width: 80px;
+        max-height: 60px;
         height: auto;
     }
 
