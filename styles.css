@@ -975,6 +975,31 @@ body {
     justify-self: center;
 }
 
+/* Desktop-specific override for larger screens */
+@media (min-width: 481px) {
+    .hero-logos-grid-6 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+        max-width: 600px !important;
+    }
+    
+    .hero-logos-grid-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+        max-width: 400px !important;
+    }
+    
+    .logo-item {
+        height: 120px !important;
+        width: 100% !important;
+    }
+    
+    .logo-item img {
+        max-width: 200px !important;
+        max-height: 100px !important;
+    }
+}
+
 .logo-item {
     display: flex;
     justify-content: center;
