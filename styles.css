@@ -2279,21 +2279,23 @@ section:nth-child(even) {
 .sponsor-logos-6 {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 2rem 1.5rem !important;
-    margin-top: 1.5rem !important;
+    gap: 1rem 0.8rem !important;
+    margin-top: 1rem !important;
     align-items: center !important;
     justify-items: center !important;
-    max-width: 500px !important;
+    max-width: 280px !important;
+    width: 100% !important;
 }
 
 .sponsor-logos-3 {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1.5rem !important;
-    margin-top: 1.5rem !important;
+    gap: 1rem 0.8rem !important;
+    margin-top: 1rem !important;
     align-items: center !important;
     justify-items: center !important;
-    max-width: 450px !important;
+    max-width: 250px !important;
+    width: 100% !important;
 }
 
 .sponsor-logos-3 img:nth-child(3) {
@@ -2303,7 +2305,7 @@ section:nth-child(even) {
 .sponsor-logos img,
 .sponsor-logos-6 img,
 .sponsor-logos-3 img {
-    max-width: 120px !important;
+    max-width: 70px !important;
     height: auto !important;
     object-fit: contain !important;
     transition: transform 0.3s ease !important;
