@@ -150,7 +150,20 @@ document.addEventListener('DOMContentLoaded', function() {
             paymentInfoAmount.textContent = displayText;
         }
         
-        console.log('Payment amounts updated successfully');
+        // Update payment info modal QR code based on team size
+        const infoQrImages = document.querySelectorAll('.payment-info-qr-image');
+        infoQrImages.forEach(img => {
+            if (totalAmount === 240) {
+                img.src = 'upi_payment_240rs.png';
+                img.onerror = function() {
+                    this.src = 'upi_payment_120rs.png';
+                };
+            } else {
+                img.src = 'upi_payment_120rs.png';
+            }
+        });
+        
+        console.log('Payment amounts and QR codes updated successfully');
     }
     
     // Team size change handler
@@ -578,11 +591,26 @@ function showPaymentModal(teamId, forceTeamSize = null) {
         
         // 4. Update QR code images if you have different QR codes for different amounts
         const qrImages = modal.querySelectorAll('.qr-code-image, .mobile-qr-code-image');
+        const infoQrImages = document.querySelectorAll('.payment-info-qr-image');
+        
+        // Update modal QR codes
         qrImages.forEach(img => {
             if (totalAmount === 240) {
                 img.src = 'upi_payment_240rs.png';
                 img.onerror = function() {
                     // Fallback to generic QR if specific amount QR doesn't exist
+                    this.src = 'upi_payment_120rs.png';
+                };
+            } else {
+                img.src = 'upi_payment_120rs.png';
+            }
+        });
+        
+        // Update payment info modal QR codes
+        infoQrImages.forEach(img => {
+            if (totalAmount === 240) {
+                img.src = 'upi_payment_240rs.png';
+                img.onerror = function() {
                     this.src = 'upi_payment_120rs.png';
                 };
             } else {
@@ -688,7 +716,7 @@ function openUPIApp() {
     
     // Double-encode for better compatibility with different UPI apps
     const encodedNote = encodeURIComponent(transactionNote);
-    const upiUrl = `upi://pay?pa=indirasuthanvece@oksbi&pn=Indirasuthan%20Vijaya&am=${totalAmount}&cu=INR&tn=${encodedNote}&mc=5411`;
+    const upiUrl = `upi://pay?pa=mvkvasanth20-1@okaxis&pn=Vasanthakumar%20Muthuraj&am=${totalAmount}&cu=INR&tn=${encodedNote}&mc=5411`;
     
     console.log('UPI URL:', upiUrl);
     
@@ -705,7 +733,7 @@ function openUPIApp() {
         console.error('Error opening UPI app:', error);
         
         // Fallback alert with manual payment details
-        alert(`❌ UPI App Error\\n\\nManual Payment Details:\\n• UPI ID: indirasuthanvece@oksbi\\n• Amount: ₹${totalAmount}\\n• Note: ${transactionNote}\\n• Team ID: ${teamId}\\n• Team Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\\n\\nPlease make payment manually and include the note exactly as shown above.`);
+        alert(`❌ UPI App Error\n\nManual Payment Details:\n• UPI ID: mvkvasanth20-1@okaxis\n• Amount: ₹${totalAmount}\n• Note: ${transactionNote}\n• Team ID: ${teamId}\n• Team Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\n\nPlease make payment manually and include the note exactly as shown above.`);
     }
 }
 
@@ -813,9 +841,27 @@ function selectText(element) {
 function openPaymentInfoModal() {
     const modal = document.getElementById('paymentInfoModal');
     if (modal) {
+        // Get current team size to show correct QR code
+        const teamSizeSelect = document.getElementById('teamSize');
+        let teamSize = teamSizeSelect ? teamSizeSelect.value : '1';
+        let totalAmount = parseInt(teamSize || '1') * 120;
+        
+        // Update payment info modal QR code based on team size
+        const infoQrImages = document.querySelectorAll('.payment-info-qr-image');
+        infoQrImages.forEach(img => {
+            if (totalAmount === 240) {
+                img.src = 'upi_payment_240rs.png';
+                img.onerror = function() {
+                    this.src = 'upi_payment_120rs.png';
+                };
+            } else {
+                img.src = 'upi_payment_120rs.png';
+            }
+        });
+        
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        console.log('Payment info modal opened');
+        console.log('Payment info modal opened with team size:', teamSize, 'amount:', totalAmount);
     }
 }
 
