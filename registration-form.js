@@ -716,7 +716,7 @@ function openUPIApp() {
     
     // Double-encode for better compatibility with different UPI apps
     const encodedNote = encodeURIComponent(transactionNote);
-    const upiUrl = `upi://pay?pa=mvkvasanth20-1@okaxis&pn=Vasanthakumar%20Muthuraj&am=${totalAmount}&cu=INR&tn=${encodedNote}&mc=5411`;
+    const upiUrl = `upi://pay?pa=talkwithsam2005@oksbi&pn=Jeya%20Samuel%20B&am=${totalAmount}&cu=INR&tn=${encodedNote}&mc=5411`;
     
     console.log('UPI URL:', upiUrl);
     
@@ -733,7 +733,7 @@ function openUPIApp() {
         console.error('Error opening UPI app:', error);
         
         // Fallback alert with manual payment details
-        alert(`❌ UPI App Error\n\nManual Payment Details:\n• UPI ID: mvkvasanth20-1@okaxis\n• Amount: ₹${totalAmount}\n• Note: ${transactionNote}\n• Team ID: ${teamId}\n• Team Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\n\nPlease make payment manually and include the note exactly as shown above.`);
+        alert(`❌ UPI App Error\n\nManual Payment Details:\n• UPI ID: talkwithsam2005@oksbi\n• Amount: ₹${totalAmount}\n• Note: ${transactionNote}\n• Team ID: ${teamId}\n• Team Size: ${teamSize} member${teamSize === '1' ? '' : 's'}\n\nPlease make payment manually and include the note exactly as shown above.`);
     }
 }
 
