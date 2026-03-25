@@ -28,35 +28,155 @@ function typeWriter() {
     type();
 }
 
-// Event countdown and registration status
-function updateEventStatus() {
-    const messageTextEl = document.getElementById('messageText');
-    const messageBanner = document.getElementById('runningMessageBanner');
-    
-    if (messageTextEl && messageBanner) {
-        // Event date: March 13, 2026
-        const eventDate = new Date('2026-03-13T09:30:00');
-        const registrationCloseDate = new Date('2026-03-10T23:59:59');
-        const now = new Date();
-        
-        if (now > eventDate) {
-            // Event has passed
-            messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-            messageTextEl.textContent = '❌ NEXORA 2K26 has concluded. Thank you to all participants! Stay tuned for future events - NOVA NEXUS HUB ❌';
-        } else if (now > registrationCloseDate) {
-            // Registration closed but event not started
-            messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-            messageTextEl.textContent = '❌ Registration has closed. Event starts on March 13, 2026. Good luck to all registered teams! ❌';
+const REGISTRATION_DEADLINE = new Date(2026, 2, 25, 18, 0, 0); // 25/03/2026 6:00 PM
+const REGISTRATION_OPEN_MESSAGE = 'Registration closes by 6 PM 25/03/2026 - Nova Nexus Club';
+const REGISTRATION_CLOSED_MESSAGE = 'Registration closed wait for the next event - Nova Nexus Club';
+
+function isRegistrationClosed() {
+    return new Date() >= REGISTRATION_DEADLINE;
+}
+
+function ensureRunningMessageBanner() {
+    let messageBanner = document.getElementById('runningMessageBanner');
+    let messageTextEl = document.getElementById('messageText');
+
+    if (!messageBanner) {
+        messageBanner = document.createElement('div');
+        messageBanner.id = 'runningMessageBanner';
+        messageBanner.className = 'running-message-banner';
+        messageBanner.innerHTML = '<div class="running-message-content"><span id="messageText" class="message-text"></span></div>';
+
+        const navbar = document.querySelector('.navbar');
+        if (navbar && navbar.parentNode) {
+            navbar.insertAdjacentElement('afterend', messageBanner);
         } else {
-            // Registration open
-            messageBanner.style.background = 'linear-gradient(90deg, #ff9800 0%, #ffd700 50%, #ff9800 100%)';
-            messageTextEl.textContent = '🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 per head 🎉 NEXORA 2K26 - March 13, 2026 | Register Now! Limited Slots | Team Size: 1-2 Members | Registration Fee: ₹120 per head 🎉';
+            document.body.prepend(messageBanner);
         }
     }
+
+    if (!messageTextEl) {
+        messageTextEl = messageBanner.querySelector('#messageText');
+    }
+
+    return { messageBanner, messageTextEl };
+}
+
+function updateRunningMessage() {
+    const bannerParts = ensureRunningMessageBanner();
+    if (!bannerParts || !bannerParts.messageBanner || !bannerParts.messageTextEl) {
+        return;
+    }
+
+    const closed = isRegistrationClosed();
+    const text = closed ? REGISTRATION_CLOSED_MESSAGE : REGISTRATION_OPEN_MESSAGE;
+
+    bannerParts.messageBanner.style.background = closed
+        ? 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)'
+        : 'linear-gradient(90deg, #ff9800 0%, #ffd700 50%, #ff9800 100%)';
+
+    bannerParts.messageTextEl.textContent = `${text}   |   ${text}   |   ${text}`;
+}
+
+function ensureHomeCountdown() {
+    if (!document.body.classList.contains('home')) {
+        return null;
+    }
+
+    let countdown = document.getElementById('registrationCountdown');
+    if (!countdown) {
+        const heroContent = document.querySelector('.hero-content');
+        if (!heroContent) {
+            return null;
+        }
+
+        countdown = document.createElement('div');
+        countdown.id = 'registrationCountdown';
+        countdown.className = 'countdown-timer';
+        countdown.innerHTML = `
+            <h3 id="countdownTitle" class="countdown-title">Registration Ends In</h3>
+            <div class="countdown-boxes">
+                <div class="countdown-box countdown-days">
+                    <div id="countdownDays" class="countdown-number">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div id="countdownHours" class="countdown-number">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div id="countdownMinutes" class="countdown-number">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div id="countdownSeconds" class="countdown-number">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        `;
+
+        const eventsGrid = heroContent.querySelector('.events-grid');
+        if (eventsGrid) {
+            heroContent.insertBefore(countdown, eventsGrid);
+        } else {
+            heroContent.appendChild(countdown);
+        }
+    }
+
+    return countdown;
+}
+
+function updateHomeCountdown() {
+    const countdown = ensureHomeCountdown();
+    if (!countdown) {
+        return;
+    }
+
+    const now = new Date();
+    const timeLeft = REGISTRATION_DEADLINE.getTime() - now.getTime();
+    const titleEl = document.getElementById('countdownTitle');
+    const daysEl = document.getElementById('countdownDays');
+    const hoursEl = document.getElementById('countdownHours');
+    const minutesEl = document.getElementById('countdownMinutes');
+    const secondsEl = document.getElementById('countdownSeconds');
+
+    if (!titleEl || !daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        return;
+    }
+
+    if (timeLeft <= 0) {
+        titleEl.textContent = 'Registration Closed';
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        return;
+    }
+
+    const totalSeconds = Math.floor(timeLeft / 1000);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    titleEl.textContent = 'Registration Ends In';
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+}
+
+// Event countdown and registration status
+function updateEventStatus() {
+    updateRunningMessage();
+    updateHomeCountdown();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     updateEventStatus();
+    setInterval(updateEventStatus, 1000);
     if (document.querySelector('.typewriter-text')) {
         typeWriter();
     }
