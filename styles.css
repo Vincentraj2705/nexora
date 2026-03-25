@@ -634,24 +634,45 @@ body {
 
 @media (max-width: 768px) {
     .running-message-banner {
-        top: 70px;
-        padding: 8px 0;
+        top: 86px;
+        padding: 4px 0;
+        min-height: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    .running-message-content {
+        white-space: nowrap;
+        animation: scroll-left 22s linear infinite;
     }
     
     .message-text {
-        font-size: 0.85rem;
+        display: inline-block;
+        font-size: 0.78rem;
+        line-height: 1;
+        letter-spacing: 0.5px;
     }
 }
 
 @media (max-width: 480px) {
     .running-message-banner {
-        top: 65px;
-        padding: 6px 0;
+        top: 84px;
+        padding: 3px 0;
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .running-message-content {
+        white-space: nowrap;
+        animation: scroll-left 18s linear infinite;
     }
     
     .message-text {
-        font-size: 0.75rem;
-        letter-spacing: 0.5px;
+        display: inline-block;
+        font-size: 0.7rem;
+        letter-spacing: 0.4px;
+        line-height: 1;
     }
 }
 
@@ -755,6 +776,11 @@ body {
     .countdown-days {
         display: none !important;
     }
+
+    /* Hide the leading separator before Hours when Days is hidden */
+    .countdown-days + .countdown-separator {
+        display: none !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -794,6 +820,11 @@ body {
     
     /* Hide days on mobile */
     .countdown-days {
+        display: none !important;
+    }
+
+    /* Hide the leading separator before Hours when Days is hidden */
+    .countdown-days + .countdown-separator {
         display: none !important;
     }
 }
