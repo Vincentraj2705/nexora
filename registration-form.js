@@ -1,35 +1,6 @@
 // Registration Form Handler
 // Paste your Web App URL here:
 const REGISTRATION_FORM_URL = 'https://script.google.com/macros/s/AKfycbyzBOdOSxoi_rQoxb9NK6jRNgw0VqXmUS1VYAVOp5lZdRTdUgtARg_2dKJ3uX0lxKWl/exec';
-const REGISTRATION_DEADLINE = new Date(2026, 2, 25, 18, 0, 0); // 25/03/2026 6:00 PM
-
-function isRegistrationClosed() {
-    return new Date() >= REGISTRATION_DEADLINE;
-}
-
-function lockRegistrationForm(form) {
-    if (!form) return;
-
-    const submitBtn = form.querySelector('.submit-btn');
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.setAttribute('aria-disabled', 'true');
-        submitBtn.style.opacity = '0.6';
-        submitBtn.style.cursor = 'not-allowed';
-        submitBtn.innerHTML = '<i class="fas fa-lock"></i> Registration Closed';
-    }
-
-    if (!document.getElementById('registrationClosedNotice')) {
-        const notice = document.createElement('p');
-        notice.id = 'registrationClosedNotice';
-        notice.style.color = '#ef4444';
-        notice.style.fontWeight = '700';
-        notice.style.marginTop = '0.75rem';
-        notice.style.textAlign = 'center';
-        notice.textContent = 'Registration closed at 6:00 PM on 25/03/2026.';
-        form.appendChild(notice);
-    }
-}
 
 // Enhanced Security utilities
 function sanitizeInput(input) {
